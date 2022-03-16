@@ -61,15 +61,32 @@ def ma(update, context):
     chat = update.effective_chat
     l = update.message.text
     l = l.replace(' ', '')
-    if len(l) == 3:
-        v = float(l[0])
-        n = float(l[2])
-        c = l[1]
-    elif len(l) == 4:
-        v = float(l[0])
-        n = float(l[3])
-        c = l[1:2]
+    f = 0
+    g = 0
+    for i in l:
+        if i.isdigit():
+            f += 1
+        elif i == '.':
+            f += 1
+        else:
+            d = f
+            g += 1
+    print(g)
+    if g == 1:
+        v = float(l[0 : d])
+        n = float(l[d+1 : len(l)])
+        c = l[d]
+    elif g == 2:
+        v = float(l[0: d - 1])
+        n = float(l[d + 1: len(l)])
+        c = l[d-1:d]
+    print(v)
+    print(n)
+    print(c)
     g = ca(v, n, c)
+    if g % 1 < 0.000001:
+        g = g // 1
+        g = int(g)
     context.bot.send_message(chat_id=chat.id, text=g)
 
 
