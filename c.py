@@ -49,8 +49,8 @@ def ca(s, b, action):
             return f
         if f % 1 == 0:
             f = int(f)
-    elif action == "**":
-        f = s ** b
+    elif action == "":
+        f = s  b
         if f % 1 == 0:
             f = int(f)
     else:
@@ -77,19 +77,20 @@ def ma(update, context):
         n = float(l[d+1 : len(l)])
         c = l[d]
     elif g == 2:
-        v = float(l[0: d - 1])
-        n = float(l[d + 1: len(l)])
-        c = l[d-1:d]
+        v = float(l[0: d])
+        n = float(l[d + 2: len(l)])
+        c = l[d:d+2]
     print(v)
     print(n)
     print(c)
-    g = ca(v, n, c)
+    o = ca(v, n, c)
     if g % 1 > 0.000001:
-        g = round(g)
-        g = int(g)
-    context.bot.send_message(chat_id=chat.id, text=g)
+        o = round(g)
+        o = int(g)
+    context.bot.send_message(chat_id=chat.id, text=o)
 
 
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, ma))
 updater.start_polling()
+updater.idle()
