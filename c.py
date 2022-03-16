@@ -29,3 +29,51 @@ def ca(s, b, action):
         if b!= 0:
             f = s / b
         else:
+            f = 'you shouldn`t do like this with zero'
+            return f
+        if f % 1 == 0:
+            f = int(f)
+    elif action == "//":
+        if b!= 0:
+            f = s // b
+        else:
+            f = 'you shouldn`t do like this with zero'
+            return f
+        if f % 1 == 0:
+            f = int(f)
+    elif action == "%":
+        if b!= 0:
+            f = s % b
+        else:
+            f = 'you shouldn`t do like this with zero'
+            return f
+        if f % 1 == 0:
+            f = int(f)
+    elif action == "**":
+        f = s ** b
+        if f % 1 == 0:
+            f = int(f)
+    else:
+        return "error"
+    return f
+
+def ma(update, context):
+    chat = update.effective_chat
+    l = update.message.text
+    l = l.replace(' ', '')
+    if len(l) == 3:
+        v = float(l[0])
+        n = float(l[2])
+        c = l[1]
+    elif len(l) == 4:
+        v = float(l[0])
+        n = float(l[3])
+        c = l[1:2]
+    g = ca(v, n, c)
+    context.bot.send_message(chat_id=chat.id, text=g)
+
+
+dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, ma))
+updater.start_polling()
+updater.idle()
