@@ -84,8 +84,8 @@ def ma(update, context):
     print(n)
     print(c)
     g = ca(v, n, c)
-    if g % 1 < 0.000001:
-        g = g // 1
+    if g % 1 > 0.000001:
+        g = round(g)
         g = int(g)
     context.bot.send_message(chat_id=chat.id, text=g)
 
@@ -93,4 +93,3 @@ def ma(update, context):
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, ma))
 updater.start_polling()
-updater.idle()
