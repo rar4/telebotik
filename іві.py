@@ -13,28 +13,32 @@ def ah(update, context):
     lol(update)
 
 
-def lol(update ):
-    try:
-        with open('sus.json', 'a') as g:
-         g.close()
-    except:
-        with open('sus.json', 'w') as g:
-         g.close()
-    with open('sus.json', 'a') as g:
-        a = datetime.datetime.now()
-        sus =  {
-            """inf""" : {
-            "user" : {"user id" : update.message.chat.id, "user name" : update.message.chat.first_name},
-            "message": {"text": update.message.text, "id": update.message.message_id},
-            "date": a
-        }}
 
-        ss = str(f"""{sus}\n""")
-        ss = ss.replace("'", '"')
-        ss = ss.replace('datetime.datetime', '')
-        ss = ss.replace('(', '[')
-        ss = ss.replace(')', ']')
-        print(ss)
+def lol(update):
+    a = datetime.datetime.now()
+    sus =  {
+        """inf""" : {
+        "user" : {"user id" : update.message.chat.id, "user name" : update.message.chat.first_name},
+        "message": {"text": update.message.text, "id": update.message.message_id},
+        "date": a
+    }}
+    try:
+        with open('sus.json', 'r') as g:
+            ss = str(f""", {sus}]""")
+            jj = 9
+    except:
+        ss = str(f"""[{sus}]""")
+        jj = 0
+    ss = ss.replace("'", '"')
+    ss = ss.replace('datetime.datetime', '')
+    ss = ss.replace('(', '[')
+    ss = ss.replace(')', ']')
+    with open('sus.json', 'a+') as g:
+        g.close()
+    with open('sus.json', 'r+') as g:
+        o = g.readline()
+        if jj != 0:
+            g.seek(len(o) - 1)
         g.write(ss)
 
 
