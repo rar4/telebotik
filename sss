@@ -1,0 +1,136 @@
+import json as d
+
+
+def sear():
+    with open('sus.json', 'r') as k:
+        j = k.readlines()
+        f = []
+        for i in j:
+            json = d.loads(i)
+            f.append(json)
+        return f
+
+
+def datsear(jsone):
+    date = []
+    for i in jsone:
+        dat = i['date']
+        date.append(dat)
+    strdat = str(date)
+    a = input(f'in what date did you send a message\n({strdat}): ')
+    list = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['chat id']
+        if i['date'] == a:
+            list.append(i)
+    st = str(list)
+    st = st.replace('[', '')
+    st = st.replace(']', '')
+    return st
+
+
+def usernamesear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['user name']
+        print(usenam)
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = input(f'with what name did you want to seach a message \n({strdat}): ')
+    list = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['chat id']
+        if usenam == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    return ts
+
+
+def chatidsear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['chat id']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = int(input(f'with what chat id do you want to search \n({strdat}): '))
+    list = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['chat id']
+        if usenam == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    return ts
+
+
+def messageidsear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['message']
+        usenam = use['id']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = int(input(f'with what chat id do you want to search \n({strdat}): '))
+    list = []
+    for i in jsone:
+        mes = i['message']
+        id = mes['id']
+        if id == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    return ts
+
+
+def textsear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['message']
+        usenam = use['text']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = input(f'with what chat id do you want to search \n({strdat}): ')
+    list = []
+    for i in jsone:
+        mes = i['message']
+        id = mes['text']
+        if id == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    return ts
+
+def main():
+    print(sear())
+    print('if you want to search with username - input 1, if with chat id - input 2' )
+    print('if you want to search with date input 3')
+    triger = int(input(  'if you want to search with text of a message - input 4, if with message id - input 5: '))
+    js = sear()
+    if triger == 3:
+      print(f'this is your json {datsear(js)}')
+    elif triger == 1:
+        print(f'this is(are) your json(s) {usernamesear(js)}')
+    elif triger == 2:
+        print(f'this is(are) your json(s) {chatidsear(js)}')
+    elif triger == 4:
+        print(f'this is(are) your json(s) {textsear(js)}')
+    elif triger == 5:
+        print(f'this is(are) your json(s) {messageidsear(js)}')
+
+
+
+main()
