@@ -18,9 +18,10 @@ def echo(update, context):
     create_json(update)
 
 
-def js_write(sus):
+def js_write(js):
     with open('sus.json', 'a') as f:
-        d.dump(sus, f)
+        d.dump(js, f, ensure_ascii=False)
+        f.write('\n')
 
 
 def dat():
@@ -31,6 +32,7 @@ def dat():
     return ss
 
 def create_json(update):
+    print(update.message.chat.first_name)
     js_obj = {
         "user": {"chat id": update.message.chat.id, "user name" : update.message.chat.first_name},
         "message": {"text": update.message.text, "id": update.message.message_id},
@@ -44,3 +46,4 @@ disp.add_handler(CommandHandler('start', wel))
 disp.add_handler(MessageHandler(Filters.text, echo))
 updater.start_polling()
 updater.idle()
+
