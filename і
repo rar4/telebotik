@@ -1,0 +1,175 @@
+import json as d
+
+
+def sear():
+    with open('sus.json', 'r') as k:
+        j = k.readlines()
+        f = []
+        for i in j:
+            json = d.loads(i)
+            f.append(json)
+        return f
+
+
+def datsear(jsone):
+    date = []
+    for i in jsone:
+        dat = i['date']
+        date.append(dat)
+    strdat = str(date)
+    a = input(f'in what date did you send a message\n({strdat}): ')
+    list = []
+    for i in jsone:
+        use = i['date']
+        if use == a:
+            list.append(use)
+    st = str(list)
+    st = st.replace('[', '')
+    st = st.replace(']', '')
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    if len(list) == 0:
+            return 0
+    return ts
+
+
+def usernamesear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['user name']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = input(f'with what name did you want to seach a message \n({strdat}): ')
+    list = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['user name']
+        if usenam == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    if len(list) == 0:
+            return 0
+    return ts
+
+
+def chatidsear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['chat id']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = int(input(f'with what chat id do you want to search \n({strdat}): '))
+    list = []
+    for i in jsone:
+        use = i['user']
+        usenam = use['chat id']
+        if usenam == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    if len(list) == 0:
+            return 0
+    return ts
+
+
+def messageidsear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['message']
+        usenam = use['id']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = int(input(f'with what chat id do you want to search \n({strdat}): '))
+    list = []
+    for i in jsone:
+        mes = i['message']
+        id = mes['id']
+        if id == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    if len(list) == 0:
+            return 0
+    return ts
+
+
+def textsear(jsone):
+    usernames = []
+    for i in jsone:
+        use = i['message']
+        usenam = use['text']
+        if usenam not in usernames:
+            usernames.append(usenam)
+    strdat = str(usernames)
+    a = input(f'with what chat id do you want to search \n({strdat}): ')
+    list = []
+    for i in jsone:
+        mes = i['message']
+        id = mes['text']
+        if id == a:
+            list.append(i)
+    ts = ''
+    for srt in list:
+        ts += f'\n{str(srt)}'
+    if len(list) == 0:
+            return 0
+    return ts
+
+def main():
+    h = 10
+    while h == 10:
+        print('\nif you want to search with username - input 1, if with chat id - input 2' )
+        print('if you want to search with date input 3')
+        try:
+            triger = int(input(  'if you want to search with text of a message - input 4, if with message id - input 5, if you want to exit input 6: '))
+        except:
+            a=10
+        js = sear()
+        try:
+            if triger == 3:
+                a = datsear(js)
+                if a != 0:
+                    print(f'this is your json {datsear(js)}')
+                else:
+                    print('invalid word')
+            elif triger == 1:
+                a = usernamesear(js)
+                if a != 0:
+                    print(f'this is your json {a}')
+                else:
+                    print('invalid word')
+            elif triger == 2:
+                a = chatidsear(js)
+                if a != 0:
+                    print(f'this is your json {a}')
+                else:
+                    print('invalid word')
+            elif triger == 4:
+                a = textsear(js)
+                if a != 0:
+                    print(f'this is your json {a}')
+                else:
+                    print('invalid word')
+            elif triger == 5:
+                a = textsear(js)
+                if a != 0:
+                    print(f'this is your json {a}')
+                else:
+                    print('invalid word')
+            elif triger == 6:
+                h = 1
+        except:
+            print('invalid number')
+            h = 10
+
+main()
