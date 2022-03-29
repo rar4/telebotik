@@ -1,0 +1,125 @@
+import json as js
+class Phonebook:
+    def count(self):
+        try:
+            with open('phone_book.json', 'r') as d:
+                hhh = js.load(d)
+                u = 0
+            u = len(hhh)+1
+            return u
+        except:
+            return 0
+
+
+    number_of_users = count(0)
+    def __init__(self, first, last, place, concret_place, phone_number):
+        self.first = first
+        self.last = last
+        self.place = place
+        self.concret_place = concret_place
+        self.email = f'{first}_{last}.{concret_place}@{concret_place}.com'
+        self.phone_number = phone_number
+        self.user_number = Phonebook.count(4)
+        with open('phone_book.json', 'a+') as g:
+            dict = {'first name' : first, 'last name' : last, 'place' : place,
+                    'city or village' : concret_place, 'email' : self.email,
+                    'phone number' : phone_number, 'user number' : self.user_number}
+            sds = []
+            try:
+                with open('phone_book.json', 'r') as gg:
+                    lo = js.load(gg)
+                    lo.append(dict)
+                with open('phone_book.json', 'w') as gg:
+                    js.dump(lo, gg, ensure_ascii=False)
+            except:
+                with open('phone_book.json', 'w') as gg:
+                    sds.append(dict)
+                    js.dump(sds, gg, ensure_ascii=False)
+
+
+    def __str__(self):
+        dod ={'first name' : self.first, 'last name' : self.last, 'place' : self.place,
+                    'city or village' : self.concret_place, 'email' : self.email,
+                    'phone number' : self.phone_number, 'user number' : self.user_number}
+        return str(dod)
+
+
+def search_contact(dat, place):
+    with open('phone_book.json', 'r') as gg:
+        h = []
+        list = js.load(gg)
+        for i in list:
+            if i[place] == dat:
+               h.append(i)
+    return h
+
+
+def delete_contact(num):
+    with open('phone_book.json', 'r') as gg:
+        sss = js.load(gg)
+        sss.remove(num)
+    with open('phone_book.json', 'w') as gg:
+        js.dump(sss, gg)
+
+
+def redact_contact(contact, place, change):
+    with open('phone_book.json', 'r') as gg:
+        aff = js.load(gg)
+        for i in aff:
+            if i == contact:
+                vf = i
+                i[place] = change
+                with open('phone_book.json', 'w') as gg:
+                  js.dump(aff, gg)
+def main():
+    a = 1234567890
+    while a != 0:
+        try:
+            print('to search contact input 1, to create contact input 2,')
+            a = int(input(' to delete contact input 3, to redact contact input 4, input 0 to escape, to see number of contacts input 5'))
+        except ValueError:
+            print('invalid number')
+        if a == 1:
+            dfg = input('with what charicter do tou want to search contact?, for example: first name: ')
+            hk = input('what information does your contact have?, for example: Alex: ')
+            try:
+                hk = int(hk)
+            except:
+                pass
+            try:
+                print(f" here your contact(s){search_contact(hk, dfg)}")
+            except:
+                print('invalid contact information')
+
+        if a == 2:
+            try:
+                wsd = input('input a first name of contact: ')
+                wd = input('input a last name of contact: ')
+                ws = input('is he or she live in village or in a city?: ')
+                sd = input('input a city or village where contact live: ')
+                dsw  = int(input('input a phone number of contact'))
+                contact = Phonebook(wsd, wd, ws, sd, dsw)
+            except ValueError:
+                print('invalid phone number')
+                a = 2
+        if a == 3:
+            try:
+                obj = input('input a contact which would you like to delete: ')
+                ghj = js.loads(obj)
+                delete_contact(ghj)
+            except ValueError:
+                print('invalid contact')
+        if a == 4:
+            obj = input('input a contact which would you like to change: ')
+            obje = js.loads(obj)
+            dfg = input(' what charicter do tou want change in contact?, for example: first name: ')
+            hk = input('what information does your contact  sould to have?, for example: Alex: ')
+            try:
+                redact_contact(obje, dfg, hk)
+            except ValueError:
+                print('invalid information')
+        if a == 5:
+            print(Phonebook.number_of_users)
+
+
+main()
