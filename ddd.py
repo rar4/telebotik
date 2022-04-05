@@ -46,7 +46,7 @@ class Human:
         return 'you can not be friends'
 
 class Child(Human):
-    def __init__(self, name, lname, floor, age, sens,  toys, *args, **kwargs):
+    def __init__(self, name, lname, floor, age, sens,  toys=None, *args, **kwargs):
         super().__init__(name, lname, floor, age, sens)
         self.toys = toys
     def __str__(self):
@@ -117,7 +117,7 @@ class Adult(Human):
         return 'error'
 
 class Student(Adult):
-    def __init__(self, name, lname, floor, age, sens, clas, *args, **kwargs):
+    def __init__(self, name, lname, floor, age, sens, clas=None, *args, **kwargs):
         super().__init__(name, lname, floor, age, sens)
         self.clas = clas
 
@@ -245,6 +245,8 @@ def main():
     print(test.do_test(student1))
     print('------------------------')
     print(tests.do_test(student1))
+asdds=ElementaryShcoolStudent('a','a','a,','a,','a','a','a', 'a')
+print(asdds )
 main()
 #вибачте, у мене проблема з другим дз в наслідуванні, в класі ElementaryShcoolStudent я наслідую два класи і в ініті
 # у мене повертає помилку, на скільки я зрозумів, програма не бачить аргумент, який є у одного класу, а у іншого - ні
