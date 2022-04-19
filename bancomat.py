@@ -3,7 +3,7 @@ from functools import wraps
 
 
 
-def logger(funk):
+def time_logger(funk):
     import time
     @wraps(funk)
     def tim(*args, **kwargs):
@@ -21,24 +21,23 @@ def logger(funk):
 
 
 
-def loger(funk):
+def info_loger(funk):
     def tim(*args, **kwargs):
         result = funk(*args, **kwargs)
         with open('logg.txt', 'a') as log:
-            log.write(f'acction -- {funk.__name__}')
+            log.write(f' acction -- {funk.__name__}')
             nam = funk.__name__
         if nam == 'credit_to_card':
-            print('aboba')
             with open('logg.txt', 'a') as log:
-                log.write(f' number -- {BankAcount.Bancomat.nummm}  ')
-                log.write(f'money -- {BankAcount.Bancomat.money}\n')
+                log.write(f' number -- {Bancomat.nummm}  ')
+                log.write(f'money -- {Bancomat.money}\n')
         if nam == 'withdraw':
             with open('logg.txt', 'a') as log:
-                log.write(f' pin -- {BankAcount.Bancomat.pin}  ')
-                log.write(f'money -- {BankAcount.Bancomat.money}')
+                log.write(f' pin -- {Bancomat.pin}  ')
+                log.write(f'money -- {Bancomat.money}\n')
         else:
             with open('logg.txt', 'a') as log:
-                log.write(f' cvv -- {BankAcount.Bancomat.cvv}, date -- {BankAcount.Bancomat.date}, reciver -- {BankAcount.Bancomat.an_ac}\n')
+                log.write(f' cvv -- {Bancomat.cvv}, date -- {Bancomat.date}, reciver -- {Bancomat.an_ac}\n')
         return result
 
     return tim
@@ -65,10 +64,12 @@ class BankAcount:
         self._dat = BankAcount.date()
         self.__money = money
         BankAcount.nums.append(number)
-    def print_money(self):
-        return self.__money
-    @loger
-    @logger
+    @info_loger
+    def print_money(self, pin):
+        if self.__pin == pin:
+            return self.__money
+    @info_loger
+    @time_logger
     def credit_to_card(self, num, money):
         if num == None:
             return num
@@ -78,8 +79,8 @@ class BankAcount:
         else:
             return 'error'
 
-    @loger
-    @logger
+    @info_loger
+    @time_logger
     def withdraw(self, pin, money):
         if self.__pin == pin:
             self.__money += money
@@ -87,8 +88,8 @@ class BankAcount:
         else:
             return 'error'
 
-    @loger
-    @logger
+    @info_loger
+    @time_logger
     def trans_to_card(self, another_acount, cvv, date, money):
         if self.__cvv == cvv and self._dat == date:
             self.__money += money
@@ -96,71 +97,92 @@ class BankAcount:
             return 'transacttion complited'
         else:
             return 'error'
-    class Bancomat:
-        date = 0
-        nummm = 0
-        cvv = 0
-        pin = 0
-        an_ac = 0
-        money = 0
-        @staticmethod
-        @logger
-        def credit_to_card(acount):
-            try:
-                num = int(input('input a number: '))
-            except:
-                return 'it is not number'
-            try:
-                money = int(input('number of money: '))
-            except:
-                return 'it is not number'
-            BankAcount.Bancomat.nummm = num
-            BankAcount.Bancomat.money = money
-            return acount.credit_to_card(num, money)
+class Bancomat:
+    date = 0
+    nummm = 0
+    cvv = 0
+    pin = 0
+    an_ac = 0
+    money = 0
+    @staticmethod
+    def print_money(acount):
+        try:
+            pin = int(input('input a pin: '))
+        except:
+            return 'it is not number'
+        return BankAcount.print_money(acount, pin)
 
-        @staticmethod
-        @logger
-        def withdraw(acount):
-            try:
-                pin = int(input('input a pin: '))
-            except:
-                return 'it is not number'
-            try:
-                money = int(input('number of money: '))
-                money = money * -1
-            except:
-                return 'it is not number'
-            BankAcount.Bancomat.pin = pin
-            BankAcount.Bancomat.money = money * -1
-            return acount.withdraw(pin, money)
-        @staticmethod
-        @logger
-        def trans_to_card(acount, another_ack):
-            try:
-                date = input('date: ')
-                cvv = int(input('cvv: '))
-            except:
-                return 'it is not number'
-            try:
-                money = int(input('number of money: '))
-                money = money * -1
-            except:
-                return 'it is not number'
-            BankAcount.Bancomat.money = money * -1
-            BankAcount.Bancomat.cvv = cvv
-            BankAcount.Bancomat.date = date
-            BankAcount.Bancomat.an_ac = another_ack.ame
-            acount.trans_to_card(another_ack, cvv, date, money)
-            return 'transacttion complited'
+    @staticmethod
+    @time_logger
+    def credit_to_card(acount):
+        try:
+            num = int(input('input a number: '))
+        except:
+            return 'it is not number'
+        try:
+            money = int(input('number of money: '))
+        except:
+            return 'it is not number'
+        Bancomat.nummm = num
+        Bancomat.money = money
+        return acount.credit_to_card(num, money)
+
+    @staticmethod
+    @time_logger
+    def withdraw(acount):
+        try:
+            pin = int(input('input a pin: '))
+        except:
+            return 'it is not number'
+        try:
+            money = int(input('number of money: '))
+            money = money * -1
+        except:
+            return 'it is not number'
+        Bancomat.pin = pin
+        Bancomat.money = money * -1
+        return acount.withdraw(pin, money)
+    @staticmethod
+    @time_logger
+    def trans_to_card(acount, another_ack):
+        try:
+            date = input('date: ')
+            cvv = int(input('cvv: '))
+        except:
+            return 'it is not number'
+        try:
+            money = int(input('number of money: '))
+            money = money * -1
+        except:
+            return 'it is not number'
+        Bancomat.money = money * -1
+        Bancomat.cvv = cvv
+        Bancomat.date = date
+        Bancomat.an_ac = another_ack.ame
+        return acount.trans_to_card(another_ack, cvv, date, money)
+
+
+
+
+def main(ded, vnuk):
+    a = 0
+    while a != 235.5:
+        try:
+            a = int(input('what do you want to do? (1 -- credit to card, 2 -- withdraw, 3 -- trans out of card, 4 -- chek balanse, 5 -- finish ) '))
+        except:
+            print('it is not a number')
+        if a == 1:
+            print(Bancomat.credit_to_card(ded))
+            print('a')
+        if a == 2:
+            print(Bancomat.withdraw(ded))
+        if a == 3:
+            print(Bancomat.trans_to_card(ded, vnuk))
+        if a == 4:
+            print(Bancomat.print_money(ded))
+        if a == 5:
+            return
+
 ded = BankAcount('ded', 2283, 8753267899876535, 478)
 vnuk = BankAcount('vnuk', 2285, 9753267899876535, 487)
-
-
-print(ded._dat)
-print(BankAcount.Bancomat.trans_to_card(ded, vnuk))
-print(ded.print_money())
-print(vnuk.print_money())
-print(BankAcount.Bancomat.withdraw(ded))
-print(ded.print_money())
-print(BankAcount.Bancomat.credit_to_card(ded))
-print(ded.print_money())
+main(ded, vnuk)
