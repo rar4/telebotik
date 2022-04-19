@@ -14,5 +14,3 @@ def power(a = 1, b = 1):
     return a ** b
 
 print(power(2, 3))
-power.__beb__ = 1
-print(power.__beb__)
