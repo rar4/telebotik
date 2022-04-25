@@ -58,27 +58,35 @@ def gen(start=0, end=1, step=1):
     if step >= 2:
         s = len(list3)
         d = step - 1
-        list4.append(list3.pop(d))
+        element = list3.pop(d)
+        list4.append(element)
+        yield element
         while len(list4) != s // step:
             g = d + step - 1
             d=g
-            list4.append(list3.pop(g))
-        return list4
+            element = list3.pop(g)
+            list4.append(element)
+            yield element
     if step == -1:
         while len(list3) != 0:
-            list4.append(list3[-1])
-            list3.pop(-1)
-        return list4
+            element = list3.pop(-1)
+            yield element
     if step <= -2:
         s = len(list3)
         d = step
-        list4.append(list3.pop(d))
+        element = list3.pop(d)
+        list4.append(element)
+        yield element
         while len(list4) != s // (step * -1):
             g = d + step + 1
             d=g
-            list4.append(list3.pop(g))
-        return list4
-    return list3
+            element = list3.pop(g)
+            list4.append(element)
+            yield element
+    if step == 1:
+        while len(list3) != 0:
+            element = list3.pop(0)
+            yield element
 
 def gues():
     num = 999
@@ -89,14 +97,10 @@ def gues():
     yield num, 'загадане число'
 
 
+#print(list(gen(0, 10, -3)))
 #print(list(gues()))
-#print(gen(0, 10, step = -3))
-#print(gen(10, 0 , step=-3))
 #print('------------------------')
 #a = list(square_num100k())
-#print(a)
-#print('------------------------')
-#print(passwords)
 #print('------------------------')
 #print(list(ret_save_pass()))
 
