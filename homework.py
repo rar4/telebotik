@@ -41,55 +41,27 @@ def ret_save_pass():
 
 
 def gen(start=0, end=None, step=1):
-    if end == None:
+    if end is None:
         end = start
         start = 0
-    list1 = []
-    list2 = []
-    list4 = []
-    if start > end:
-        start, end = end, start
 
-        step *= -1
-    while end != 0:
-        list1.append(end)
-        end -= 1
-    while start != 0:
-        list2.append(start)
-        start -= 1
-    list3 = list(set(list1) - set(list2))
-    if step >= 2:
-        s = len(list3)
-        d = step - 1
-        element = list3.pop(d)
-        list4.append(element)
-        yield element
-        while len(list4) != s // step:
-            g = d + step - 1
-            d=g
-            element = list3.pop(g)
-            list4.append(element)
-            yield element
-    if step == -1:
-        while len(list3) != 0:
-            element = list3.pop(-1)
-            yield element
-    if step <= -2:
-        s = len(list3)
-        d = step
-        element = list3.pop(d)
-        list4.append(element)
-        yield element
-        while len(list4) != s // (step * -1):
-            g = d + step + 1
-            d=g
-            element = list3.pop(g)
-            list4.append(element)
-            yield element
-    if step == 1:
-        while len(list3) != 0:
-            element = list3.pop(0)
-            yield element
+    if end < start and step > 0:
+        return None
+
+    if end > start and step < 0:
+        return None
+
+    if start != end:
+        xc = end - start
+        xc = xc // step
+        if xc < 0:
+            xc *= -1
+        for i in range(xc+1):
+            print(start)
+            start += step
+
+
+
 
 def gues():
     num = 999
@@ -100,11 +72,12 @@ def gues():
     yield num, 'загадане число'
 
 
-print(list(gen(10)))
+gen(1, -34, -3)
 #print(list(gues()))
 #print('------------------------')
 #a = list(square_num100k())
 #print('------------------------')
 #print(list(ret_save_pass()))
+
 
 
