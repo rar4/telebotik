@@ -40,7 +40,10 @@ def ret_save_pass():
 
 
 
-def gen(start=0, end=1, step=1):
+def gen(start=0, end=None, step=1):
+    if end == None:
+        end = start
+        start = 0
     list1 = []
     list2 = []
     list4 = []
@@ -97,10 +100,11 @@ def gues():
     yield num, 'загадане число'
 
 
-#print(list(gen(0, 10, -3)))
+print(list(gen(10)))
 #print(list(gues()))
 #print('------------------------')
 #a = list(square_num100k())
 #print('------------------------')
 #print(list(ret_save_pass()))
+
 
