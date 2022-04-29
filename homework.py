@@ -56,9 +56,10 @@ def gen(start=0, end=None, step=1):
         xc = xc // step
         if xc < 0:
             xc *= -1
-        for i in range(xc+1):
-            print(start)
+        while xc+1 != 0:
+            yield start
             start += step
+            xc-=1
 
 
 
@@ -72,12 +73,10 @@ def gues():
     yield num, 'загадане число'
 
 
-gen(1, -34, -3)
+print(list(gen(1, -34, -3)))
 #print(list(gues()))
 #print('------------------------')
 #a = list(square_num100k())
 #print('------------------------')
 #print(list(ret_save_pass()))
-
-
 
