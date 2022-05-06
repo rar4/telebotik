@@ -1,4 +1,4 @@
-﻿import datetime as dat
+import datetime as dat
 a = 0
 class Human:
     d = 0
@@ -302,6 +302,7 @@ class Teacher(Worker):
             if str(type(i)) != "<class '__main__.Student'>":
                 students = None
         self.students = students
+        self.list = [ name, lname, floor, sens, salary, clas, students]
     def __iter__(self):
         self.index = 0
         return self
@@ -313,6 +314,10 @@ class Teacher(Worker):
         index = self.index
         self.index += 1
         return list[index]
+
+    def __getitem__(self, item):
+        return self.list[item]
+
 
 class ElementaryShcoolStudent(Student, Child):
     def __init__(self,  name, lname, floor, sens, clas, game, toys):
@@ -358,27 +363,32 @@ def main():
     print(alex.__repr__())
     alex=Child('Ale', 'chenko', 'male', 'have a pasport', 'guitar')
     print(alex.pasport)
-alex = Human('alx', 'ali', 'mail', 'iter')
-for i in alex:
-    print(i)
-print('--------------------------')
-alex = Child('alx', 'ali', 'mail', 'iter', 'cube')
-for i in alex:
-    print(i)
-print('--------------------------')
-alex = Student('alx', 'ali', 'mail', 'iter', '6b')
-for i in alex:
-    print(i)
-print('--------------------------')
-alex = Worker('alx', 'ali', 'mail', 'iter', 100)
-for i in alex:
-    print(i)
-print('--------------------------')
+    '________-----_______'
+    alex = Human('alx', 'ali', 'mail', 'iter')
+    for i in alex:
+        print(i)
+    print('--------------------------')
+    alex = Child('alx', 'ali', 'mail', 'iter', 'cube')
+    for i in alex:
+        print(i)
+    print('--------------------------')
+    alex = Student('alx', 'ali', 'mail', 'iter', '6b')
+    for i in alex:
+        print(i)
+    print('--------------------------')
+    alex = Worker('alx', 'ali', 'mail', 'iter', 100)
+    for i in alex:
+        print(i)
+    print('--------------------------')
+    lex = Student('alx', 'ali', 'mail', 'iter', '6b')
+    alex = Teacher('alx', 'ali', 'mail', 'iter', 100, '6b', [lex])
+    for i in alex:
+        print(i)
+    print('--------------------------')
+    alex = ElementaryShcoolStudent('alx', 'ali', 'mail', 'iter', '6b', 'Minecraft', 'cube')
+    for i in alex:
+        print(i)
+
 lex = Student('alx', 'ali', 'mail', 'iter', '6b')
 alex = Teacher('alx', 'ali', 'mail', 'iter', 100, '6b', [lex])
-for i in alex:
-    print(i)
-print('--------------------------')
-alex = ElementaryShcoolStudent('alx', 'ali', 'mail', 'iter', '6b', 'Minecraft', 'cube')
-for i in alex:
-    print(i)
+print(alex[-1])
