@@ -1,7 +1,7 @@
 import kalkulator
 def is_int(a):
     try:
-        a = int(a)
+        a = float(a)
         return a
     except:
         return False
